@@ -1,0 +1,10 @@
+services:
+  influxdb:
+    image: influxdb:2
+    container_name: guardian-x-influxdb
+    ports:
+      - "8086:8086"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/var/lib/influxdb2

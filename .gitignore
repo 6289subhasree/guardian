@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Node / React
+node_modules/
+dist/
+
+# Machine Learning Models
+*.pth
+*.pt
+
+# IDE settings
+.vscode/
+
+# Operating System files
+.DS_Store
+Thumbs.db
+# SQLite databases
+*.db
+*.sqlite
+*.sqlite3
+
+.venv/
+
+# InfluxDB runtime data
+deployment/influxdb/data/
+
+!backend/app/ml/guardian_model.pt
