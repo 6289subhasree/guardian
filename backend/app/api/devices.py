@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from app.api.responses import require_local
 
 from app.schemas.device import (
     DeviceRegistrationRequest,
@@ -20,7 +21,9 @@ router = APIRouter(
 @router.post("/register", response_model=DeviceResponse)
 def register(
     request: DeviceRegistrationRequest,
+    http_request: Request,
 ):
+    require_local(http_request)
     try:
         device = register_device(
             device_id=request.device_id,

@@ -1,0 +1,14 @@
+{
+  "type": "synthetic only",
+  "train_graphs": 80,
+  "held_out_graphs": 20,
+  "metrics": {
+    "TP": 15,
+    "FP": 0,
+    "FN": 0,
+    "TN": 45,
+    "precision": 1.0,
+    "recall": 1.0,
+    "false_positive_rate": 0.0
+  }
+}

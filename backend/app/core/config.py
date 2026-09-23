@@ -8,8 +8,8 @@ ENV_FILE = Path(__file__).resolve().parents[1] / ".env"
 load_dotenv(ENV_FILE)
 
 
-APP_NAME = os.getenv("APP_NAME")
-APP_VERSION = os.getenv("APP_VERSION")
+APP_NAME = os.getenv("APP_NAME", "GUARDIAN-X")
+APP_VERSION = os.getenv("APP_VERSION", "0.2.0")
 DEBUG = os.getenv("DEBUG") == "True"
 
 API_HOST = os.getenv("API_HOST")
@@ -20,8 +20,15 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 MQTT_BROKER = os.getenv("MQTT_BROKER")
 MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
 MQTT_TOPIC = os.getenv("MQTT_TOPIC")
+MQTT_ENABLED = os.getenv("MQTT_ENABLED", "true").lower() == "true"
+AUTO_DETECTION = os.getenv("AUTO_DETECTION", "true").lower() == "true"
 
 INFLUXDB_URL = os.getenv("INFLUXDB_URL")
 INFLUXDB_TOKEN = os.getenv("INFLUXDB_TOKEN")
 INFLUXDB_ORG = os.getenv("INFLUXDB_ORG")
 INFLUXDB_BUCKET = os.getenv("INFLUXDB_BUCKET")
+
+RESPONSE_MODE = os.getenv("RESPONSE_MODE", "record")  # record or firewall
+AUTO_FIREWALL = os.getenv("AUTO_FIREWALL", "false").lower() == "true"
+AUTO_CONFIDENCE = float(os.getenv("AUTO_CONFIDENCE", "0.95"))
+AUTO_MIN_PACKETS = int(os.getenv("AUTO_MIN_PACKETS", "20"))

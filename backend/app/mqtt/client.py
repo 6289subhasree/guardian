@@ -1,12 +1,12 @@
 import json
 import paho.mqtt.client as mqtt
+from app.core.config import MQTT_BROKER, MQTT_PORT, MQTT_TOPIC
 
 from app.services.telemetry_service import store_telemetry
 
 
-MQTT_BROKER = "127.0.0.1"
-MQTT_PORT = 1883
-MQTT_TOPIC = "guardian/devices/telemetry"
+MQTT_BROKER = MQTT_BROKER or "127.0.0.1"
+MQTT_TOPIC = MQTT_TOPIC or "guardian/devices/telemetry"
 
 
 def on_connect(client, userdata, flags, reason_code, properties):

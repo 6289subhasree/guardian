@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from app.api.responses import require_local
 
 from app.schemas.device import DeviceResponse
 from app.services.recovery_service import recover_device
@@ -11,7 +12,8 @@ router = APIRouter(
 
 
 @router.post("/{device_id}", response_model=DeviceResponse)
-def recover(device_id: str):
+def recover(device_id: str, request: Request):
+    require_local(request)
     try:
         device = recover_device(device_id)
     except ValueError as e:

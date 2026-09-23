@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
+from app.api.responses import require_local
 
 from app.services.detection_pipeline import get_detections, run_detection
 
@@ -6,7 +7,8 @@ router = APIRouter(prefix="/detections", tags=["Detection"])
 
 
 @router.post("/run")
-def detect_now():
+def detect_now(request: Request):
+    require_local(request)
     try:
         return run_detection()
     except FileNotFoundError as exc:

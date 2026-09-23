@@ -28,3 +28,7 @@ Thumbs.db
 deployment/influxdb/data/
 
 !backend/app/ml/guardian_model.pt
+
+# Controlled capture data and generated evaluation reports
+captures.jsonl
+*.evaluation.json

@@ -11,10 +11,7 @@ from app.services.response_service import response_service
 
 
 def run_detection() -> list[dict]:
-    """Score registered devices with observations; record each decision.
-
-    Isolation here changes application state only. It does not configure a firewall.
-    """
+    """Score a five-minute observation window and record every decision."""
     model = DetectionService()
     features = {f.device_id: f for f in network_observation_service.get_features()}
     graph = device_graph_service.build_graph()
@@ -27,7 +24,7 @@ def run_detection() -> list[dict]:
             if device.device_id not in features:
                 continue
             detection = scored[device.device_id]
-            response = response_service.respond(detection)
+            response = response_service.respond(detection, features[device.device_id].packet_count)
             result = {
                 "device_id": device.device_id,
                 "risk_score": detection.risk_score,

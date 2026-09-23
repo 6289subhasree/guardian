@@ -30,11 +30,13 @@ cd backend
 .venv/Scripts/python.exe -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-3. Flash the sketch three times, changing only `DEVICE_ID` to `ESP32-001`, `ESP32-002`, `ESP32-003`. Read each device IP in Serial Monitor. Register each real IP using `POST /devices/register` in `http://localhost:8000/docs`. The firmware posts heartbeats and MQTT demo telemetry every five seconds.
-4. Start dashboard: `cd frontend; npm run dev`. Use the network interface name from `python -c "from scapy.all import show_interfaces; show_interfaces()"` and capture with `python -m app.network.network_monitor --interface YOUR_INTERFACE --timeout 60` from `backend` in an administrator terminal. Run `POST /detections/run` in API docs. Check `/network/features`, `/graph`, `/detections`.
+3. Flash the sketch three times, changing only `DEVICE_ID` to `ESP32-001`, `ESP32-002`, `ESP32-003`. Read each device IP in Serial Monitor. Start the dashboard with `cd frontend; npm run dev` in another terminal, then use **Add device** to register each board's actual IP. The firmware posts heartbeats and fixed MQTT demo telemetry every five seconds.
+4. Use the network interface name from `python -c "from scapy.all import show_interfaces; show_interfaces()"` and capture with `python -m app.network.network_monitor --interface YOUR_INTERFACE --timeout 60` from `backend` in an administrator terminal. Confirm `/network/features`, `/graph`, `/detections`. Detection also runs on a timer when fresh observations arrive. Use **Run detection** for a visible manual cycle.
+
+5. Keep `RESPONSE_MODE=record` during initial lab testing. Only if you have administrator rights and have verified the device IP, change it to `firewall`, restart the backend, and use **Block MQTT** on one device. A host firewall rule restricts new inbound TCP/1883 connections from that IP; existing sessions may persist. Use **Recover** to remove the rule. If enforcement fails, check the response log and retain monitor mode for the presentation.
 
 **Fast fallback:** If Npcap/hotspot packet capture fails, `backend/demo.py` injects synthetic observations into the API and demonstrates graph, inference, and dashboard while the real ESP32 telemetry still runs. This is a mixed hardware/software demo; describe it honestly.
 
 ## Time expectation
 
-With dependencies installed and the sketch compiling **before** lab: 30–60 minutes for three boards and basic telemetry, then another 20–40 minutes for packet capture and end-to-end verification. On an unfamiliar network or with driver/firewall trouble, allow 2+ hours. If you have under one hour, prioritize one board transmitting real telemetry and use the synthetic observation fallback. Actual network quarantine and validated botnet detection require separate engineering and evaluation.
+With dependencies installed and the sketch compiling **before** lab: 30–60 minutes for three boards and basic telemetry, then another 20–40 minutes for packet capture and end-to-end verification. On an unfamiliar network or with driver/firewall trouble, allow 2+ hours. If you have under one hour, prioritize one board transmitting real telemetry and use the synthetic observation fallback. The host MQTT block is optional and still needs physical validation; validated botnet detection requires separately labeled data and evaluation.

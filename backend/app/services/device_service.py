@@ -31,6 +31,13 @@ def register_device(
         connection.close()
         raise ValueError("Device already registered")
 
+    existing_ip = connection.execute(
+        "SELECT device_id FROM devices WHERE ip_address = ?", (ip_address,)
+    ).fetchone()
+    if existing_ip is not None:
+        connection.close()
+        raise ValueError(f"IP address already assigned to {existing_ip['device_id']}")
+
     now = datetime.now()
 
     connection.execute(
